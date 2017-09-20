@@ -12,26 +12,16 @@ class SpeakButton extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      result: '',
-      imgName: 'mic_black.svg'
+      imgName: 'mic_black.svg',
+      result: ''
     };
   }
 
-  render() {
-    const img = require(`./image/${this.state.imgName}`);
-    return (
-      <div className="Speak">
-        <img src={img} width="70" height="100" onClick={this.handleClick.bind(this)}/>
-        <h2>{this.state.result}</h2>
-      </div>
-    );
-  }
-
-handleClick() {
+  handleClick() {
     if (!recording) {
       recording = true;
       result = '';
-      this.setState({imgName: 'mic_gray.svg'});
+      this.setState({imgName: 'mic_gray.svg', result});
 
       client.startMicAndContinuousRecognition();
       client.onFinalResponseReceived = function (response) {
@@ -46,8 +36,18 @@ handleClick() {
       if (result !== '')
         talk(result);
 
-      this.setState({result, imgName: 'mic_black.svg'});
+      this.setState({imgName: 'mic_black.svg', result});
     }
+  }
+
+  render() {
+    const img = require(`./image/${this.state.imgName}`);
+    return (
+      <div className="Speak">
+        <img src={img} width="70" height="100" onClick={this.handleClick.bind(this)}/>
+        <h2>{this.state.result}</h2>
+      </div>
+    );
   }
 }
 
