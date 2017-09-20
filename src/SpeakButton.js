@@ -35,6 +35,7 @@ handleClick() {
 
       client.startMicAndContinuousRecognition();
       client.onFinalResponseReceived = function (response) {
+        console.log('You said: ' + response);
         result = result+ response;
       }
     } else {
@@ -42,6 +43,7 @@ handleClick() {
 
       client.endMicAndContinuousRecognition();
       result = result.replace(/\./g, ' ');
+      talk();
 
       this.setState({result, imgName: 'mic_black.svg'});
     }
