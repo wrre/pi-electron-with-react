@@ -20,7 +20,7 @@ const getBody = (text) => {
   });
 }
 
-function talk() {
+function talk(text) {
   fetch(
     URI,
     {
@@ -45,7 +45,7 @@ function talk() {
           {
             method: 'POST',
             headers,
-            body: getBody('Nice'),
+            body: getBody(text),
           }
         )
       }

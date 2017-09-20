@@ -43,7 +43,8 @@ handleClick() {
 
       client.endMicAndContinuousRecognition();
       result = result.replace(/\./g, ' ');
-      talk();
+      if (result !== '')
+        talk(result);
 
       this.setState({result, imgName: 'mic_black.svg'});
     }
