@@ -20,25 +20,26 @@ class SpeakButton extends Component {
   }
 
   handleClick() {
+    const sperker = this;
     if (!recording) {
       recording = true;
       result = '';
-      this.setState({imgName: 'mic_gray.svg', result, sented: false, title: 'Recording, click to stop and sent message'});
+      sperker.setState({imgName: 'mic_gray.svg', result, sented: false, title: 'Recording, click to stop and sent message'});
 
       client.startMicAndContinuousRecognition();
       client.onFinalResponseReceived = function (response) {
-        console.log('You said: ' + response);
-        result = result+ response;
+        response = response.replace(/\.|\?|,/g, ' ').toLowerCase();
+        result = result + response;
+        sperker.setState({result});
       }
     } else {
       recording = false;
 
       client.endMicAndContinuousRecognition();
-      result = result.replace(/\./g, ' ');
       if (result !== '') {
         talk(result).then(
           res => {
-            this.setState({sented: true});
+            sperker.setState({sented: true});
           }
         );
       }
